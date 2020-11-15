@@ -30,7 +30,7 @@ namespace Chislo_bolishe_menshe
                 {
                     while (true)
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
+                       
                         Console.WriteLine("Виберете режим игри: №1 P1 vs P2, №2 Bot vs P1");
                         Console.Write("Я вибираю режим игри №");
                         c = Convert.ToByte(Console.ReadLine());
@@ -47,8 +47,7 @@ namespace Chislo_bolishe_menshe
                         }
                         else
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+                            WriteError();
 
                         }
                     }
@@ -56,8 +55,7 @@ namespace Chislo_bolishe_menshe
                 }
                 catch
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+                    WriteError();
 
                 }
             }
@@ -69,7 +67,6 @@ namespace Chislo_bolishe_menshe
         static void P1_vs_Bot()
         {                    
             Random R = new Random();
-            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Введите до кокого числа бот будет придумивать число: ");
             int a;
             int b;
@@ -77,14 +74,13 @@ namespace Chislo_bolishe_menshe
             {
                 try
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
+                    
                     a = Convert.ToInt32(Console.ReadLine());
                     break;
                 }
                 catch
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+                    WriteError();
                 }
             }
             int rnum = R.Next(0, a);
@@ -106,18 +102,16 @@ namespace Chislo_bolishe_menshe
                         }
                         else
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+                            WriteError();
                         }
                     }
                     catch
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+                        WriteError();
                     }
                     
                 }
-                Console.ForegroundColor = ConsoleColor.White;
+                
                 Console.Write($"{i}: ");
                 if (rnum == b)
                 {
@@ -135,6 +129,12 @@ namespace Chislo_bolishe_menshe
             }         
         }
 
+        static void WriteError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Ви не правильно ввели значение, введите ещо раз, но теперь правильно.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }    
 }
    
