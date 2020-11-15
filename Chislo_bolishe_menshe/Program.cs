@@ -4,9 +4,9 @@ namespace Chislo_bolishe_menshe
 {
     class Program
     {
-
-        
-         
+        static Random R = new Random();
+        static int max_zagad_chislo, b, rnum;
+        static byte i, regim_Game = 0;
         static void Main()
         {
             if (Game_start())
@@ -23,7 +23,7 @@ namespace Chislo_bolishe_menshe
 
         static bool Game_start( )
         {
-            byte c = 0;
+            
             while (true)
             {
                 try
@@ -33,14 +33,14 @@ namespace Chislo_bolishe_menshe
                        
                         Console.WriteLine("Виберете режим игри: №1 P1 vs P2, №2 Bot vs P1");
                         Console.Write("Я вибираю режим игри №");
-                        c = Convert.ToByte(Console.ReadLine());
-                        if (c == 1)
+                        regim_Game = Convert.ToByte(Console.ReadLine());
+                        if (regim_Game == 1)
                         {
 
                             return  true;
 
                         }
-                        else if (c == 2)
+                        else if (regim_Game == 2)
                         {
                             return false;
 
@@ -65,70 +65,90 @@ namespace Chislo_bolishe_menshe
 
         }
         static void P1_vs_Bot()
-        {                    
-            Random R = new Random();
+        {
+            bot_pridumivaet_chislo();
+            while(true)
+            {
+                ves_ch_sravn();
+                if (write_srav())
+                {
+                    break;
+                }
+                
+            }
+
+        }
+        static void bot_pridumivaet_chislo()
+        {
+            #region bot_pridumivaet_chislo            
             Console.Write("Введите до кокого числа бот будет придумивать число: ");
-            int a;
-            int b;
             while (true)
             {
                 try
                 {
-                    
-                    a = Convert.ToInt32(Console.ReadLine());
-                    break;
+
+                    max_zagad_chislo = Convert.ToInt32(Console.ReadLine());
+                    rnum = R.Next(0, max_zagad_chislo);
+                    return;
                 }
                 catch
                 {
                     WriteError();
                 }
             }
-            int rnum = R.Next(0, a);
-            byte i = 0;
-            while(true)
+            
+            #endregion
+        }
+        static bool write_srav()
+        {
+            #region write_srav
+            Console.Write($"{i}: ");
+            if (rnum == b)
             {
-                i++;
-                Console.Write("Введите число для сравнения: ");
-                while (true) 
+                Console.WriteLine($"Поздровляю!!! Ви вийграли за {i} ходов");
+                return true;
+            }
+            else if (rnum < b)
+            {
+                Console.WriteLine($"Загаданое число меньше {b}");
+            }
+            else
+            {
+                Console.WriteLine($"Загаданое число больше {b}");
+            }
+            return false;
+            #endregion
+        }
+        static void ves_ch_sravn()
+        {
+            #region ves_ch_sravn
+            i++;
+            Console.Write("Введите число для сравнения: ");
+            while (true)
+            {
+                try
                 {
-                    try
+
+                    b = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
+                    if (b <= max_zagad_chislo)
                     {
-                        Console.ForegroundColor = ConsoleColor.White;
-                        b = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        if (b <= a)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            WriteError();
-                        }
+                        return;
                     }
-                    catch
+                    else
                     {
                         WriteError();
                     }
-                    
                 }
-                
-                Console.Write($"{i}: ");
-                if (rnum == b)
+                catch
                 {
-                    Console.WriteLine($"Поздровляю!!! Ви вийграли за {i} ходов") ;
-                    break;
+                    WriteError();
                 }
-                else if (rnum < b)
-                {
-                    Console.WriteLine($"Загаданое число меньше {b}");
-                }
-                else
-                {
-                    Console.WriteLine($"Загаданое число больше {b}");
-                }
-            }         
-        }
 
+            }
+            #endregion
+        }
+        
         static void WriteError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
